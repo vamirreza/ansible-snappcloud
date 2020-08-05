@@ -1,0 +1,24 @@
+---
+
+- name: store host facts
+  blockinfile:
+    dest: /etc/ansible/facts.d/{{ app_name }}.fact
+    marker: "{mark}"
+    marker_begin: '{'
+    marker_end: '}'
+    create: yes
+    block: |
+        "env_color": "{{ _app_next_color }}",
+        "instances_count": "{{ app_instances_count }}",
+        "version": "{{ latest_tag.stdout }}"
+
+- name: stop or remove old env containers
+  docker_container:
+    name: "{{ app_name }}_{{ _app_prev_color }}_{{ item }}"
+    state: "{{ app_old_containers_treatment_type }}"
+  loop: "{{ range(_app_prev_count | int) | list }}"
+  ignore_errors: yes
+  when:
+    - not _app_first_run
+    - latest_tag.stdout != _app_prev_version
+    - app_old_containers_treatment_enabled

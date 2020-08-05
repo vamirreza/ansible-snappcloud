@@ -1,0 +1,44 @@
+---
+
+- name: reread ansible_local facts
+  setup:
+    filter: ansible_local
+
+- name: check if run for the first time
+  set_fact:
+    _app_first_run: "{{ 'no' if ansible_local[app_name] is defined else 'yes' }}"
+
+- name: set facts about previous deployment
+  set_fact:
+    _app_prev_color: >-
+      {%- if ansible_local[app_name] is defined -%}
+        {{ ansible_local[app_name].env_color }}
+      {%- else -%}
+        {{ app_bluegreen_default_color }}
+      {%- endif %}
+    _app_prev_count: >-
+      {%- if ansible_local[app_name] is defined -%}
+        {{ ansible_local[app_name].instances_count }}
+      {%- else -%}
+        {{ app_instances_count }}
+      {%- endif %}
+    _app_prev_version: >-
+      {%- if ansible_local[app_name] is defined -%}
+        {{ ansible_local[app_name].version }}
+      {%- else -%}
+        {{ ' ' }}
+      {%- endif %}
+
+- name: set color of ongoing deployment
+  set_fact:
+    _app_next_color: "{{ app_bluegreen_tags['green'].name if (_app_prev_color == 'blue') else app_bluegreen_tags['blue'].name }}"
+
+- name: don't change color if deploying the same version
+  set_fact:
+    _app_next_color: "{{ _app_prev_color }}"
+  when:
+    - _app_prev_version == "{{ latest_tag.stdout }}"
+
+- name: set port prefix
+  set_fact:
+    app_port_prefix: "{{ app_bluegreen_tags[_app_next_color].port_prefix }}"
