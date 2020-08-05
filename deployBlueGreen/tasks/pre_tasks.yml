@@ -37,7 +37,7 @@
   set_fact:
     _app_next_color: "{{ _app_prev_color }}"
   when:
-    - _app_prev_version == "{{ latest_tag.stdout }}"
+    - _app_prev_version == "{{ deployment_tag }}"
 
 - name: set port prefix
   set_fact:

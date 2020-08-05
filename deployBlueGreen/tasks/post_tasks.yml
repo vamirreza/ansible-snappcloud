@@ -10,7 +10,8 @@
     block: |
         "env_color": "{{ _app_next_color }}",
         "instances_count": "{{ app_instances_count }}",
-        "version": "{{ latest_tag.stdout }}"
+        "version": "{{ deployment_tag }}",
+        "prev_version": "{{ _app_prev_version }}"
 
 - name: stop or remove old env containers
   docker_container:
@@ -20,5 +21,5 @@
   ignore_errors: yes
   when:
     - not _app_first_run
-    - latest_tag.stdout != _app_prev_version
+    - deployment_tag != _app_prev_version
     - app_old_containers_treatment_enabled

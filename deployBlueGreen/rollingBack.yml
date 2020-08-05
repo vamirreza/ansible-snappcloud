@@ -19,13 +19,13 @@
         create: yes
         state: present
 
-    - name: get latest tag name
-      shell: "wget -q {{ repo_link }} -O -  | sed -e 's/[][]//g' -e 's/\"//g' -e 's/ //g' | tr '}' '\n' | awk -F: '{print $3}'  | tail -n 1"
-      register: latest_tag
-    
+    - name: reread ansible_local facts
+      setup:
+        filter: ansible_local
+
     - name: set facts about previous deployment
       set_fact:
-        deployment_tag: "{{ latest_tag.stdout }}"
+        deployment_tag: "{{ ansible_local[app_name].prev_version }}"
 
     - name: do blue/green logic
       include_tasks: tasks/pre_tasks.yml
