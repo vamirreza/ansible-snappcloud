@@ -29,6 +29,16 @@
     - name: Install required system packages
       apt: name={{ sys_packages }} state=latest
 
+    - name: Disable the default site
+      file:
+        path: "etc/nginx/sites-enabled/default"
+        state: absent
+    
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted
+
 # UFW Setup
     - name: UFW - Allow SSH connections
       ufw:
