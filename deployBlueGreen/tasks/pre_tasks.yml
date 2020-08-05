@@ -28,6 +28,12 @@
       {%- else -%}
         {{ ' ' }}
       {%- endif %}
+    _app_origin_version: >-
+      {%- if ansible_local[app_name] is defined -%}
+        {{ ansible_local[app_name].prev_version }}
+      {%- else -%}
+        {{ ' ' }}
+      {%- endif %}
 
 - name: set color of ongoing deployment
   set_fact:

@@ -1,5 +1,14 @@
 ---
 
+- name: set facts about previous version
+  set_fact:
+    _prev_version: >-
+      {%- if deployment_tag == _app_prev_version -%}
+        {{ _app_origin_version }}
+      {%- else -%}
+        {{ _app_prev_version }}
+      {%- endif %}
+
 - name: store host facts
   blockinfile:
     dest: /etc/ansible/facts.d/{{ app_name }}.fact
@@ -11,7 +20,8 @@
         "env_color": "{{ _app_next_color }}",
         "instances_count": "{{ app_instances_count }}",
         "version": "{{ deployment_tag }}",
-        "prev_version": "{{ _app_prev_version }}"
+        "prev_version": "{{ _prev_version }}"
+          
 
 - name: stop or remove old env containers
   docker_container:
