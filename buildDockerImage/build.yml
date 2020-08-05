@@ -5,28 +5,28 @@
 
   tasks:
     - name: pull project repo
-	    git: 
-	      repo: "{{ repo_link }}"
-	      dest: "{{ repo_dest }}"
+      git: 
+        repo: "{{ repo_link }}"
+        dest: "{{ repo_dest }}"
         accept_hostkey: yes
 
     - name: get latest tag name
-        shell: "git describe --tags `git rev-list --tags --max-count=1`"
-        args:
-          chdir: "{{ repo_dest }}"
-        register: latest_tag
+      shell: git describe --tags $(git rev-list --tags --max-count=1)
+      args:
+        chdir: "{{ repo_dest }}"
+      register: latest_tag
 
     - name: git checkout to latest tag
-        git: 
-          repo: "{{ repo_link }}"
-          dest: "{{ repo_dest }}"
-          version: latest_tag.stdout
+      git: 
+        repo: "{{ repo_link }}"
+        dest: "{{ repo_dest }}"
+        version: "{{ latest_tag.stdout }}"
 
     - name: Build an image and push it to Docker Hub
       docker_image:
         build:
           path: "{{ repo_dest }}"
         name: "{{ image_name }}"
-        tag: latest_tag.stdout
+        tag: "{{ latest_tag.stdout }}"
         push: yes
         source: build
