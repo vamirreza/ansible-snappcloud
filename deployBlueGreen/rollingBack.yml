@@ -19,10 +19,6 @@
         create: yes
         state: present
 
-    - name: reread ansible_local facts
-      setup:
-        filter: ansible_local
-
     - name: set facts about previous deployment
       set_fact:
         deployment_tag: "{{ ansible_local[app_name].prev_version }}"
