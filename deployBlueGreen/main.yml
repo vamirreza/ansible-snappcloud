@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: VMs
   become: true
   vars_files:
     - vars/default.yml
