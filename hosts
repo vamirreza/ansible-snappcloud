@@ -1,0 +1,4 @@
+[VMs]
+docker01 ansible_host= ansible_user=root
+[build_host]
+builder ansible_host= ansible_user=root
