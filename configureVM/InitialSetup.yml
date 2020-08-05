@@ -45,6 +45,11 @@
         rule: allow
         name: OpenSSH
 
+    - name: UFW - Allow Nginx HTTP connections
+      ufw:
+        rule: allow
+        name: Nginx HTTP
+
     - name: UFW - Deny all other incoming traffic by default
       ufw:
         state: enabled
