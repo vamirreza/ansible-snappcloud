@@ -43,4 +43,4 @@ app_healthcheck_path: "/healthz"
 app_cleanup_dead_containers: yes
 
 telegram_bot_token:
-chat_id:
+telegram_user_id:
