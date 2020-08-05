@@ -93,5 +93,9 @@
     - name: do blue/green logic
       include_tasks: tasks/post_tasks.yml
       when: app_bluegreen_enabled
-    
-    
+
+    - name: send a message to chat in playbook
+      telegram:
+        token: "{{ telegram_bot_token }}"
+        chat_id: "{{ telegram_user_id }}"
+        msg: "relling back! deploy {{ app_name }}:{{ deployment_tag }} finished in {{ inventory_hostname }}!"
