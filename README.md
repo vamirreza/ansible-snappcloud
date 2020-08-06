@@ -7,7 +7,9 @@ Ansible playbooks for configure the VMs, build imags and deploy with blue/green 
 
 run the following command:
 
-> ansible-playbook -i hosts configureVM/InitialSetup.yml
+```command
+ansible-playbook -i hosts configureVM/InitialSetup.yml
+```
 
 this playbook will install required packages and docker, create user and upgrade and also restart VM.
 
@@ -16,7 +18,9 @@ this playbook will install required packages and docker, create user and upgrade
 
 run the following command:
 
-> ansible-playbook -i hosts buildDockerImage/build.yml
+```command
+ansible-playbook -i hosts buildDockerImage/build.yml
+```
 
 check **buildDockerImage/vars/default.yml** before run.
 
@@ -26,7 +30,9 @@ this playbook will pull code repository with git on build host. find your latest
 
 playbook is base on [this](https://github.com/decayofmind/ansible-bluegreen-docker) playbook. run the following command:
 
-> ansible-playbook -i hosts deployBlueGreen/main.yml
+```command
+ansible-playbook -i hosts deployBlueGreen/main.yml
+```
 
 read **deployBlueGreen/Variables.md** and check **deployBlueGreen/vars/default.yml** before run.
 
@@ -36,7 +42,9 @@ this playbook will get latest tag name from docker hub, cleanup vm, set the logi
 
 run the following command:
 
-> ansible-playbook -i hosts deployBlueGreen/rollingBack.yml
+```command
+ansible-playbook -i hosts deployBlueGreen/rollingBack.yml
+```
 
 this playbook use logic of  *Blue Green Deployment* playbook. 
 
