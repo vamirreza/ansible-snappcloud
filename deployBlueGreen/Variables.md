@@ -4,8 +4,7 @@
 | ---                                    | ---                                                                                                                                  | ---                                    |
 | `app_name`                             | Application name. Also used for container naming.                                                                                    | `snappcloudapp`                        |
 | `app_image`                            | Name of the Docker image to pull.                                                                                                    | `vamirreza/snappcloudapp`              |
-| `repo_link`                            | Repo link in docker hub registry v1
-| `link`                                 | 
+| `repo_link`                            | Repo link in docker hub registry v1                                                                                                  | `link`                                 |
 | `app_port`                             | Internal TCP port where app is listening for connections.                                                                            | `127.0.0.1:3000`                       |
 | `deployment_tag`                       | Docker image tag.                                                                                                                    | `Dynamic`                              |
 | `app_instances_count`                  | Number of containers to be run.                                                                                                      | `1`                                    |
@@ -33,7 +32,8 @@
 | `app_healthcheck_enabled`              | Perform a healthcheck on newly deployed containers.                                                                                  | `yes`                                  |
 | `app_healthcheck_path`                 | Healthcheck path.                                                                                                                    | `/healthz`                             |
 | `app_cleanup_dead_containers`          | Enables deletion of any dead containers left.                                                                                        | `yes`                                  |
-
+| `telegram_bot_token`                   | Telegram bot token for send notif in telegram                                                                                        |                                        |
+| `telegram_user_id`                     | Your Telegram user ID                                                                                                                |                                        |
 
 ### Temporary Variables
 
