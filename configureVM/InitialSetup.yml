@@ -29,16 +29,12 @@
     - name: Install required system packages
       apt: name={{ sys_packages }} state=latest
 
-    - name: Disable the default site
-      file:
-        path: "etc/nginx/sites-enabled/default"
+    - name: delete a line in nginx.conf
+      lineinfile:
+        path: /etc/nginx/nginx.conf
+        regexp: 'include \/etc\/nginx\/sites-enabled\/\*;'
         state: absent
 
-    - name: Disable the default site
-      file:
-        path: "etc/nginx/sites-available/default"
-        state: absent
-        
     - name: Restart nginx
       service:
         name: nginx
